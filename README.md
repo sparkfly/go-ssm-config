@@ -1,6 +1,8 @@
-# ssmconfig [![GoDoc](https://godoc.org/github.com/ianlopshire/go-ssm-config?status.svg)](http://godoc.org/github.com/ianlopshire/go-ssm-config) [![Report card](https://goreportcard.com/badge/github.com/ianlopshire/go-ssm-config)](https://goreportcard.com/report/github.com/ianlopshire/go-ssm-config) [![Go Cover](http://gocover.io/_badge/github.com/ianlopshire/go-ssm-config)](http://gocover.io/github.com/ianlopshire/go-ssm-config)
+# ssmconfig [![GoDoc](https://godoc.org/github.com/sparkfly/go-ssm-config?status.svg)](http://godoc.org/github.com/sparkfly/go-ssm-config) [![Report card](https://goreportcard.com/badge/github.com/sparkfly/go-ssm-config)](https://goreportcard.com/report/github.com/sparkfly/go-ssm-config) [![Go Cover](http://gocover.io/_badge/github.com/sparkfly/go-ssm-config)](http://gocover.io/github.com/sparkfly/go-ssm-config)
 
-`import "github.com/ianlopshire/go-ssm-config"`
+`import "github.com/sparkfly/go-ssm-config"`
+
+Forked from github.com/ianlopshire/go-ssm-config
 
 SSMConfig is a utility for loading configuration parameters from AWS SSM (Parameter Store) directly into a struct. This
 package is largely inspired by [kelseyhightower/envconfig](https://github.com/kelseyhightower/envconfig).
@@ -32,7 +34,7 @@ import (
     "log"
     "time"
 
-    ssmconfig "github.com/ianlopshire/go-ssm-config"
+    ssmconfig "github.com/sparkfly/go-ssm-config"
 )
 
 type Config struct {
@@ -68,7 +70,7 @@ Rate: 0.500000
 Secret: zOcZkAGB6aEjN7SAoVBT
 ```
 
-[Additional examples](https://godoc.org/github.com/ianlopshire/go-ssm-config#pkg-examples) can be found in godoc.
+[Additional examples](https://godoc.org/github.com/sparkfly/go-ssm-config#pkg-examples) can be found in godoc.
 
 ### Struct Tag Support
 

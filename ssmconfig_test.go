@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
-	ssmconfig "github.com/ianlopshire/go-ssm-config"
+	ssmconfig "github.com/sparkfly/go-ssm-config"
 )
 
 type mockSSMClient struct {

@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	ssmconfig "github.com/ianlopshire/go-ssm-config"
+	ssmconfig "github.com/sparkfly/go-ssm-config"
 )
 
 var IsIntegrationRun bool

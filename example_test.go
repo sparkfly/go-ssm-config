@@ -7,7 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
-	ssmconfig "github.com/ianlopshire/go-ssm-config"
+	ssmconfig "github.com/sparkfly/go-ssm-config"
 )
 
 func ExampleProcess() {
