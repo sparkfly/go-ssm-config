@@ -3,7 +3,6 @@
 package ssmconfig
 
 import (
-	"path"
 	"reflect"
 	"strconv"
 
@@ -47,8 +46,7 @@ type Provider struct {
 //
 // The behavior of using the `default` and `required` tags on the same struct field is
 // currently undefined.
-func (p *Provider) Process(configPath string, c interface{}) error {
-
+func (p *Provider) Process(prefix string, c interface{}) error {
 	v := reflect.ValueOf(c)
 	if v.Kind() != reflect.Ptr || v.IsNil() {
 		return errors.New("ssmconfig: c must be a pointer to a struct")
@@ -59,7 +57,7 @@ func (p *Provider) Process(configPath string, c interface{}) error {
 		return errors.New("ssmconfig: c must be a pointer to a struct")
 	}
 
-	spec := buildStructSpec(configPath, v.Type())
+	spec := buildStructSpec(prefix, v.Type())
 
 	params, invalidPrams, err := p.getParameters(spec)
 	if err != nil {
@@ -176,11 +174,11 @@ type fieldSpec struct {
 	required     bool
 }
 
-func buildStructSpec(configPath string, t reflect.Type) (spec structSpec) {
+func buildStructSpec(prefix string, t reflect.Type) (spec structSpec) {
 	for i := 0; i < t.NumField(); i++ {
 		name := t.Field(i).Tag.Get("ssm")
 		if name != "" {
-			name = path.Join(configPath, name)
+			name = prefix + name
 		}
 
 		spec = append(spec, fieldSpec{

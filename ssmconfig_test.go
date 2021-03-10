@@ -29,16 +29,16 @@ func (c *mockSSMClient) GetParameters(input *ssm.GetParametersInput) (*ssm.GetPa
 func TestProvider_Process(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		var s struct {
-			S1      string  `ssm:"/strings/s1"`
-			S2      string  `ssm:"/strings/s2" default:"string2"`
-			I1      int     `ssm:"/int/i1"`
-			I2      int     `ssm:"/int/i2" default:"42"`
-			B1      bool    `ssm:"/bool/b1"`
-			B2      bool    `ssm:"/bool/b2" default:"false"`
-			F321    float32 `ssm:"/float32/f321"`
-			F322    float32 `ssm:"/float32/f322" default:"42.42"`
-			F641    float64 `ssm:"/float64/f641"`
-			F642    float64 `ssm:"/float64/f642" default:"42.42"`
+			S1      string  `ssm:"strings/s1"`
+			S2      string  `ssm:"strings/s2" default:"string2"`
+			I1      int     `ssm:"int/i1"`
+			I2      int     `ssm:"int/i2" default:"42"`
+			B1      bool    `ssm:"bool/b1"`
+			B2      bool    `ssm:"bool/b2" default:"false"`
+			F321    float32 `ssm:"float32/f321"`
+			F322    float32 `ssm:"float32/f322" default:"42.42"`
+			F641    float64 `ssm:"float64/f641"`
+			F642    float64 `ssm:"float64/f642" default:"42.42"`
 			Invalid string
 		}
 
@@ -74,7 +74,6 @@ func TestProvider_Process(t *testing.T) {
 		}
 
 		err := p.Process("/base/", &s)
-
 		if err != nil {
 			t.Errorf("Process() unexpected error: %q", err.Error())
 		}
@@ -183,7 +182,7 @@ func TestProvider_Process(t *testing.T) {
 			name:       "missing required parameter",
 			configPath: "/base/",
 			c: &struct {
-				S1 string `ssm:"/strings/s1" required:"true"`
+				S1 string `ssm:"strings/s1" required:"true"`
 			}{},
 			client: &mockSSMClient{
 				output: &ssm.GetParametersOutput{
@@ -196,7 +195,7 @@ func TestProvider_Process(t *testing.T) {
 			name:       "unsupported field type",
 			configPath: "/base/",
 			c: &struct {
-				M1 map[string]string `ssm:"/map/m1"`
+				M1 map[string]string `ssm:"map/m1"`
 			}{},
 			client: &mockSSMClient{
 				output: &ssm.GetParametersOutput{
@@ -275,7 +274,6 @@ func TestProvider_Process(t *testing.T) {
 			if !tt.shouldErr && !reflect.DeepEqual(tt.c, tt.want) {
 				t.Errorf("Process() want %+v, have %+v", tt.want, tt.c)
 			}
-
 		})
 	}
 }

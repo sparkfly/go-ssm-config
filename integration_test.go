@@ -27,12 +27,12 @@ func TestProcess_integration(t *testing.T) {
 
 	t.Run("base case", func(t *testing.T) {
 		var s struct {
-			S1   string  `ssm:"/strings/s1"`
-			S2   string  `ssm:"/base/strings/s2"`
-			I1   int     `ssm:"/int/i1"`
-			B1   bool    `ssm:"/bool/b1"`
-			F321 float32 `ssm:"/float32/f321"`
-			F641 float64 `ssm:"/float64/f641"`
+			S1   string  `ssm:"strings/s1"`
+			S2   string  `ssm:"base/strings/s2"`
+			I1   int     `ssm:"int/i1"`
+			B1   bool    `ssm:"bool/b1"`
+			F321 float32 `ssm:"float32/f321"`
+			F641 float64 `ssm:"float64/f641"`
 		}
 
 		err := ssmconfig.Process("/go-ssm-config", &s)
@@ -63,15 +63,14 @@ func TestProcess_integration(t *testing.T) {
 		if s.F641 != 42.42 {
 			t.Errorf("Process() F641 unexpected value: want %f, have %f", 42.42, s.F641)
 		}
-
 	})
 
 	t.Run("use default when value is not present", func(t *testing.T) {
 		var s struct {
-			S3 string `ssm:"/strings/s3" default:"default"`
+			S3 string `ssm:"strings/s3" default:"default"`
 		}
 
-		err := ssmconfig.Process("/go-ssm-config", &s)
+		err := ssmconfig.Process("/go-ssm-config/", &s)
 		if err != nil {
 			t.Errorf("Process() unexpected error: %q", err.Error())
 		}
@@ -83,12 +82,12 @@ func TestProcess_integration(t *testing.T) {
 
 	t.Run("do not use default when value is present", func(t *testing.T) {
 		var s struct {
-			S1     string `ssm:"/strings/s1" default:"default"`
-			IZero  int    `ssm:"/int/i_zero" default:"42"`
-			BFalse bool   `ssm:"/bool/b2" default:"true"`
+			S1     string `ssm:"strings/s1" default:"default"`
+			IZero  int    `ssm:"int/i_zero" default:"42"`
+			BFalse bool   `ssm:"bool/b2" default:"true"`
 		}
 
-		err := ssmconfig.Process("/go-ssm-config", &s)
+		err := ssmconfig.Process("/go-ssm-config/", &s)
 		if err != nil {
 			t.Errorf("Process() unexpected error: %q", err.Error())
 		}
@@ -108,10 +107,10 @@ func TestProcess_integration(t *testing.T) {
 
 	t.Run("error on missing required value", func(t *testing.T) {
 		var s struct {
-			S3 string `ssm:"/strings/s3" required:"true"`
+			S3 string `ssm:"strings/s3" required:"true"`
 		}
 
-		err := ssmconfig.Process("/go-ssm-config", &s)
+		err := ssmconfig.Process("/go-ssm-config/", &s)
 		if err == nil {
 			t.Error("Process() expexted error but got nil")
 		}
@@ -119,10 +118,10 @@ func TestProcess_integration(t *testing.T) {
 
 	t.Run("dont error on zero value required value", func(t *testing.T) {
 		var s struct {
-			IZero int `ssm:"/int/i_zero" require:"true"`
+			IZero int `ssm:"int/i_zero" require:"true"`
 		}
 
-		err := ssmconfig.Process("/go-ssm-config", &s)
+		err := ssmconfig.Process("/go-ssm-config/", &s)
 		if err != nil {
 			t.Errorf("Process() unexpected error: %q", err.Error())
 		}
